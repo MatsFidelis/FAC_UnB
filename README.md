@@ -1,4 +1,4 @@
-# FAC 
+# Fundamentos de Arquitetura de Computadores - UnB 
 
 Repositório para armazenar as atividades, estudos e anotações da disciplina de Fundamentos de Arquitetura de Computadores, realizada no período 2023.2 para o curso de Engenharia de Software ministrado na Universidade de Brasília (UnB).
 
