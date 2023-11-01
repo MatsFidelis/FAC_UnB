@@ -1,0 +1,26 @@
+    .data
+salto_linha: .asciiz "\n"
+
+    .text
+.globl main
+
+main:
+
+    li $v0, 5               # chamada de função 5 para ler inteiro
+    syscall
+    move $t0, $v0           # move o valor lido para $t0 -> N
+
+    li $v0, 5               # chamada de função 5 para ler inteiro
+    syscall
+    move $t1, $v0           # move o valor lido para $t1 -> M
+
+    li $v0, 1               # chamada de função 1 para imprimir inteiro
+    sub $a0, $t0, $t1       # subtrai N - M
+    syscall
+
+    li $v0, 4               # chamada de função 4 para imprimir string
+    la $a0, salto_linha     # realiza o \n no final
+    syscall
+
+    li $v0, 10              # chamada de função 10 para sair do programa
+    syscall

@@ -1,0 +1,14 @@
+
+    .data
+ola: .asciiz "ola mundo\n"
+
+    .text
+.globl main
+
+main:
+    la $a0, ola         # carrega o endereço da string na memória
+    li $v0, 4           # carrega o código da syscall de impressão de string
+    syscall
+
+    li $v0, 10          # carrega o código da syscall de saída do programa
+    syscall

@@ -1,0 +1,35 @@
+
+        # Realizando a seguinte conta -> A[i] = A[j] + N  \\ end. base esta em $s0
+
+    # chamada de funcao 5 para ler os 3 seguintes inteiros
+
+    li $v0, 5               
+    syscall
+    move $t0, $v0           # move o valor lido para $t0 -> i 
+
+    li $v0, 5               
+    syscall
+    move $t1, $v0           # move o valor lido para $t1 -> j
+
+    li $v0, 5               
+    syscall
+    move $t2, $v0           # move o valor lido para $t2 -> N
+
+    # Adquirindo o endereço de A[j]
+
+    sll $t3, $t1, 2         # j = j * 4
+    add $t3, $t3, $s0       # j = j + $s0
+    lw $t3, 0($t3)          # j = A[j]
+
+    # realizando a conta A[j] + N
+
+    add $t3, $t3, $t2       # t3 = A[j] + N
+
+    # Adquirindo o endereço de A[i]
+
+    sll $t4, $t0, 2         # i = i * 4
+    add $t4, $t4, $s0       # i = i + $s0
+
+    # Armazenando o valor de A[j] + N em A[i]
+
+    sw $t3, 0($t4)          # A[i] = A[j] + N
