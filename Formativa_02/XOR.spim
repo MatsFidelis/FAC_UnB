@@ -1,0 +1,48 @@
+.data
+  N: .word 0
+  X: .word 0
+  Y: .word 0
+  R: .word 0
+
+.text
+
+main:
+  # Lê o número de operações
+  la $a0, N
+  li $v0, 5
+  syscall
+
+  # Lê as operações
+  for:
+    li $t0, 0
+    beq $t0, $a0, endfor
+
+    # Lê a próxima operação
+    la $a0, X
+    li $v0, 5
+    syscall
+
+    la $a0, Y
+    li $v0, 5
+    syscall
+
+    # Realiza a operação XOR
+    lw $t1, X
+    lw $t2, Y
+    xor $t3, $t1, $t2
+
+    # Salva o resultado
+    sw $t3, R
+
+    # Imprime o resultado
+    lw $a0, R
+    li $v0, 1
+    syscall
+
+    addi $t0, $t0, 1
+    j for
+
+endfor:
+  # Encerra o programa
+  li $v0, 10
+  syscall
