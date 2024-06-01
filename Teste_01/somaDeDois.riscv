@@ -1,0 +1,28 @@
+.data
+str: 
+	.string "\n"
+	
+.text
+
+main:
+	li a7, 5		# carrega o valor de syscall 5, para leitura de um inteiro
+	ecall			# realiza a chamada de sistema
+	mv t0, a0		# move o primeiro valor lido armazenado em a0, para o registrador t0
+	
+	li a7, 5		# carrega o valor de syscall 5, para leitura de um inteiro
+	ecall			# realiza a chamada de sistema
+	mv t1, a0		# move o primeiro valor lido armazenado em a0, para o registrador t1
+	
+	add t2, t1, t0		# realiza a soma dos dois numeros lidos
+	
+	li a7, 1		# carrega o valor de syscall 5, para imprimir um inteiro
+	mv a0, t2		# move o valor da soma, para a0, que sarmazena o parametro de impressao
+	ecall			# realiza a chamada de sistema
+	
+	li a7, 4		# carrega o valor de syscall 5, para impressao de string
+	la a0, str		# carrega o endereco onde a string esta armazenado
+	ecall			# realiza a chamada de sistema
+	
+	li a7, 10		# carrega o valor de syscall 10, para finalizar o programa
+	ecall
+	

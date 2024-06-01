@@ -1,0 +1,58 @@
+.data
+define_r: .space 256
+quebra_linha: .string "\n"
+
+.text
+li a7, 5
+ecall
+mv t0, a0
+addi t0, t0, 2
+
+#1° string
+li a7, 8			#syscall string
+la a0, define_r
+mv a1, t0			#tamanho máximo da leitura
+ecall
+mv t1, a0
+
+#string invertida
+mv t2, a0
+addi t0, t0, -3
+add t2, t2, t0
+
+addi t0, t0, 1
+li t5, 0
+li t6, 1
+for:
+beq t5, t0, end		#Quando o i = t5, chegar no tamanho da string = t0
+lb t3, (t1)
+lb t4, (t2)
+
+#add a0, zero, t3  	#Carrega o carácter no a0
+#li a7, 11  			#Syscall
+#ecall
+#add a0, zero, t4  	#Carrega o carácter no a0
+#li a7, 11  			#Syscall
+#ecall
+
+beq t3, t4, igual
+li t6, 0
+igual:
+
+addi t5, t5, 1  		#Adiciona 1 no índice de comparação
+addi t1, t1, 1  		#Pula pro próximo char
+addi t2, t2, -1  		#Pula pro próximo char
+j for 
+end:
+
+#Printar
+li a7, 1
+mv a0, t6
+ecall
+
+li a7, 4
+la a0, quebra_linha
+ecall
+
+li a7, 10
+ecall	

@@ -1,0 +1,223 @@
+.data
+
+str:
+	.string "\n"
+str2:
+	.string "ADD: "
+str3:
+	.string "SUB: "
+str4:
+	.string "AND: "
+str5:
+	.string "OR: "
+str6:
+	.string "MASK: "
+str7:
+	.string "SLL("
+str8:
+	.string "): "
+str9:
+	.string "SRL("
+str10:
+	.string "XOR: "
+	
+.text
+
+main:
+	#le o primeiro numero
+	li a7, 5
+	ecall
+		# move o input que esta em a0 e bota em t0
+	mv t0, a0
+	
+	#le o segundo numero
+	li a7, 5
+	ecall
+		# move o input que esta em a0 e bota em t1
+	mv t1, a0
+	
+	#le o terceiro numero
+	li a7, 5
+	ecall
+		# move o input que esta em a0 e bota em t2
+	mv t2, a0
+	#--------------------------------------------------------------------
+	#soma os dois
+	add t3, t0, t1
+	
+	#printa o ADD
+	li a7, 4
+	la a0, str2
+	ecall
+
+	#soma os dois numeros
+	li a7, 1
+	mv a0, t3
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall	
+	
+	#------------------------------------------------------------------------
+	
+	#printa o SUB
+	li a7, 4
+	la a0, str3
+	ecall
+	
+	#subtrai os dois
+	sub t4, t0, t1
+	
+	#printa o resultado
+	li a7, 1
+	mv a0, t4
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall	
+	
+	#-----------------------------------------------------
+	
+	#printa o AND
+	li a7, 4
+	la a0, str4
+	ecall
+	
+	#Faz and dos dois
+	and t5, t0, t1
+	
+	#printa o resultado
+	li a7, 1
+	mv a0, t5
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall	
+	
+	#-------------------------------------------
+	
+	#printa o OR
+	li a7, 4
+	la a0, str5
+	ecall
+	
+	#Faz and dos dois
+	or t6, t0, t1
+	
+	#printa o resultado
+	li a7, 1
+	mv a0, t6
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall	
+	
+	#------------------------------------------------
+		
+	#printa o XOR
+	li a7, 4
+	la a0, str10
+	ecall
+	
+	#Faz and dos dois
+	xor a2, t0, t1
+	
+	#printa o resultado
+	li a7, 1
+	mv a0, a2
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall	
+	
+	#------------------------------------------------
+	#printa o MASK
+	li a7, 4
+	la a0, str6
+	ecall
+	
+	#Faz and dos dois
+	andi a1, t2, 31
+	
+	#printa o resultado
+	li a7, 1
+	mv a0, a1
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall	
+	
+	#--------------------------------------------------
+	
+	#printa o SLL(
+	li a7, 4
+	la a0, str7
+	ecall
+	
+	#printa o MASK dentro dos parenteses
+	li a7, 1
+	mv a0, a1
+	ecall
+	
+	#printa o ): 
+	li a7, 4
+	la a0, str8
+	ecall
+	
+	#Faz slli
+	sll s1, t0, a1
+	
+	#printa o resultado
+	li a7, 1
+	mv a0, s1
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall	
+	
+	#---------------------------------------------
+	
+	#printa o SRL(
+	li a7, 4
+	la a0, str9
+	ecall
+	
+	#printa o MASK dentro dos parenteses
+	li a7, 1
+	mv a0, a1
+	ecall
+	
+	#printa o ): 
+	li a7, 4
+	la a0, str8
+	ecall
+	
+	#Faz slli
+	srl s2, t1, a1
+	
+	#printa o resultado
+	li a7, 1
+	mv a0, s2
+	ecall
+	
+	#printa a quebra de linha
+	li a7, 4
+	la a0, str
+	ecall		 
+
+
+.text

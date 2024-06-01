@@ -1,0 +1,21 @@
+.data 				# fala para o assembler que estamos definindo data e não codigo
+str: 				# nomeia essa posicao na memoria para que consiga ser referenciado no codigo
+	.string "Ola Mundo\n" 	# Copia a string
+
+
+	
+.text 
+
+
+
+main:  # Faz uma referencia para dizer por onde o programa deveria comecar
+
+	li a0, 1   		# load imediate: vai carregar o valor no caso 1 em a0
+	la a1, str 		# load adress: carrega p emdereco
+	li a2, 11  		# carrega o valor 11 (numero de caracteres) em a2 é o argumento final para o system call
+	li a7, 64  		# a7 determina qual sysem call se esta chamando
+	ecall      		# emitir a chamada
+	
+	li a0, 0   		# o codigo de saida que sera retornado e 0
+	li a7, 93  		# precisa-se indicar novamente o system call. Nesse caso e o de saida
+	ecall

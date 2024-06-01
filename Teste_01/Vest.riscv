@@ -1,0 +1,65 @@
+.data
+str:
+	.string "\n"
+gabarito:
+	.space 1024
+respostas:
+	.space 1024
+	
+.text
+main:
+	#----------------------------leitura dos inputs---------------------------------
+	
+	# parte 1----------------------------
+	li a7, 5 #le um numero
+	ecall
+	
+	mv t0, a0 # move o valor do numero lido no terminal para t0
+	
+	
+	# parte 2-----------------------------
+	
+	add t1, t1, t0 #guarda o valor oriinal do tamanho da string
+	addi, t0, t0, 2 # aumenta o tamanho da string para que ela possa ser lida
+	
+	la a0, gabarito
+	li a1, 1024 #adiciona o numero lido no terminal ao tamanho da string a ser lida
+	li a7, 8 # le a string
+	ecall
+	
+	mv s1, a0 # move o valor da string lida para s1
+
+	la a0, respostas
+	li a1, 1024 #adiciona o numero lido no terminal ao tamanho da string a ser lida
+	li a7, 8 # le a string
+	ecall
+	
+	mv s2, a0 # move o valor da string lida para s2
+	
+	#------------------------------------tratamento dos inputs----------------------------
+	
+loop: 
+
+	lb t5, 0(s1)
+	lb t6, 0(s2)
+	
+	beq t5, t6, contador
+	bne t5, t6, volta
+contador:
+	addi t3, t3, 1
+	j volta
+volta:
+	addi t1, t1, -1
+	addi s1, s1, 1
+	addi s2, s2, 1
+	
+	beqz t1, done
+	bnez t1, loop
+done:
+	li a7, 1
+	mv a0, t3
+	ecall
+	
+	li a7, 4
+	la a0, str
+	ecall
