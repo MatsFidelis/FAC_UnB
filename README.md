@@ -7,12 +7,12 @@ A disciplina tem como objetivo mostrar conceitos e fundamentos quanto a arquitet
 
 ### Teste 1 - Fundamentos de assembly RISC-V
 ㅤ
-* Trabalho 01 - [HelloWorld | SomaDeDoisN](Teste_01/)
-* Trabalho 02 - [MaiorNum | OperArit](Teste_01/)
-* Trabalho 03 - [Vest | Palindromo](Teste_01/)
-* Trabalho 04 - [MmcMdc | TestaPrimo](Teste_01/)
+* Trabalho 01 - HelloWorld | SomaDeDoisN 
+* Trabalho 02 - MaiorNum | OperArit
+* Trabalho 03 - Vest | Palindromo
+* Trabalho 04 - MmcMdc | TestaPrimo
 
-#### --> [Resoluções das questões](Teste_01/)
+#### --> [Resoluções das questões em Risc-V](Teste_01/)
 
 ### Teste 2 - Fundamentos de assembly MIPS 1
 ㅤ
@@ -21,5 +21,5 @@ A disciplina tem como objetivo mostrar conceitos e fundamentos quanto a arquitet
 * Hotel [[PDF]](questoes/hotel-simplificado.pdf)
 * Acesso à Memoria [[PDF]](questoes/memoria.pdf)
 
-#### --> [Resoluções das questões](Teste_02/)
+#### --> [Resoluções das questões em MIPS](Teste_02/)
 
