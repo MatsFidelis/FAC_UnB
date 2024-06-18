@@ -1,0 +1,62 @@
+.data
+
+sim:
+	.string "sim\n"
+nao:
+	.string "nao\n"
+invalido:
+	.string "Entrada invalida.\n"
+	
+.text
+
+main:
+
+	li a7, 5                        # Carrega o valor de syscall 5, para leitura de um inteiro
+	ecall                           # Realiza a chamada de sistema
+	mv t0, a0                       # Move o primeiro valor lido armazenado em a0 para o registrador t0 -> t0 = numero a ser verificado
+	
+	li t1, 2                        # Carrega o valor 2 para o registrador t1 -> t1 = divisor
+	li t4, 1                        # Carrega o valor 1 para o registrador t4 -> t4 = comparativo
+	li t2, 0                        # Inicializa o contador de divisões
+	beq t0, t1, eprimo              # Pula para eprimo se o número for igual a 2
+	beq t0, t4, nnprimo             # Pula para nnprimo se o número for igual a 1
+	
+	ble t0, zero, naopode           # Pula para naopode se o número for menor ou igual a zero
+	
+loop:                               # Início do loop
+
+	beq t1, t0, eprimo              # Pula para eprimo se o divisor for igual ao número
+
+	rem t3, t0, t1                  # Calcula o resto da divisão
+
+	beqz t3, nnprimo                # Pula para nnprimo se o resto for igual a zero
+
+	addi t1, t1, 1                  # Incrementa o divisor
+	addi t2, t2, 1                  # Incrementa o contador de divisões
+
+	blt t1, t0, loop                # Salta para loop se o divisor for menor que o número	
+
+eprimo:                             # Se vier para esta função, imprimir string de 'sim'
+
+	li a7, 4                        # Carrega o valor de syscall 4, para impressao de string
+	la a0, sim                      # Carrega o endereco onde a string esta armazenado
+	ecall                           # Realiza a chamada de sistema
+	j done                          # Realizo o desvio para a funcao done
+	
+nnprimo:                            # Se vier para esta função, imprimir string de 'nao'
+
+	li a7, 4                        # Carrega o valor de syscall 4, para impressao de string
+	la a0, nao                      # Carrega o endereco onde a string esta armazenado
+	ecall                           # Realiza a chamada de sistema
+	j done                          # Realizo o desvio para a funcao done
+
+naopode:                            # Se vier para esta função, imprimir string de 'invalido'
+
+	li a7, 4                        # Carrega o valor de syscall 4, para impressao de string
+	la a0, invalido                 # Carrega o endereco onde a string esta armazenado
+	ecall                           # Realiza a chamada de sistema
+	j done                          # Realizo o desvio para a funcao done
+
+done:
+
+	
