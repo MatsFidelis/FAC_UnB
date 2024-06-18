@@ -1,0 +1,67 @@
+.data
+str:
+	.string "\n"
+invalido:
+	.string "Entrada invalida.\n"
+
+.text
+
+main:
+	addi s1, zero, 2		        # Aloco o valor 2 ao reg s1 (Comparativo)
+	li a7, 5                        # Carrega o valor de syscall 5, para leitura de um inteiro
+	ecall                           # Realiza a chamada de sistema
+	mv t0, a0                       # Move o primeiro valor lido armazenado em a0 para o registrador t0
+	mv s5, t0                       # Move o valor de t0 para s5, liberando o registrador temporario t0 e armazenando em s5 = A
+	
+	li a7, 5                        # Carrega o valor de syscall 5, para leitura de um inteiro
+	ecall                           # Realiza a chamada de sistema
+	mv t1, a0                       # Move o primeiro valor lido armazenado em a0 para o registrador t1
+	mv s4, t1                       # Move o valor de t1 para s4, liberando o registrador temporario t1 e armazenando em s4 = B
+	
+	blt t0, s1, naopode             # Se t0 < 2, entao nao pode (A precisa ser maior que 1)
+	blt t1, s1, naopode             # Se t1 < 2, entao nao pode (B precisa ser maior que 1)
+	
+	jal mdc                         # Realizo o desvio, deixando linkado o endereco de retorno, e chamo a funcao mdc
+	jal mmc                         # Realizo o desvio, deixando linkado o endereco de retorno, e chamo a funcao mmc
+	
+naopode:                            # Se vier para esta funcao, imprimir string de 'invalido'
+
+	li a7, 4                        # Carrega o valor de syscall 4, para impressao de string
+	la a0, invalido                 # Carrego o endereco onde a string esta armazenado 
+	ecall                           # Realiza a chamada de sistema
+	j done                          # Realizo o desvio para a funcao done
+
+mdc:                                # Se vier para esta funcao, calcular o mdc
+
+	rem t3, t0, t1                  # Calculo o resto da divisao de t0 por t1 e armazeno em t3
+	beqz t3, printa_mdc             # Se t3 == 0, entao imprimir o mdc | Se cair de primeira, o mdc sera o proprio t1
+	mv t0, t1                       # Se passar pelo beqz, entao movo o valor de t1 para t0
+	mv t1, t3                       # Se passar pelo beqz, entao movo o valor de t3 para t1
+	bnez t3, mdc                    # Se t3 != 0, entao chamo a funcao mdc novamente, indicando um loop para o calculo do mdc
+
+printa_mdc:                         # Se vier para esta funcao, imprimir o mdc
+
+	li a7, 1                        # Carrega o valor de syscall 1, para imprimir um inteiro
+	mv a0, t1                       # Move o valor do mdc para a0, que armazena o parametro de impressao
+	ecall                           # Realiza a chamada de sistema
+	li a7, 4                        # Carrega o valor de syscall 4, para impressao de string
+	la a0, str                      # Carrega o endereco onde a string esta armazenado
+	ecall                           # Realiza a chamada de sistema
+	jr ra                           # Realizo o desvio para a funcao de retorno, onde o ultimo endereco armazenado esta em ra
+
+mmc:                                # Se vier para esta funcao, calcular o mmc
+
+	mul t2, s5, s4                  # Calculo a multiplicacao de A e B e armazeno em t2
+	div t2, t2, t1                  # Calculo a divisao de t2 por t1 e armazeno em t2
+	j printa_mmc                    # Realizo o desvio para a funcao printa_mmc
+	
+printa_mmc:                         # Se vier para esta funcao, imprimir o mmc
+
+	li a7, 1                        # Carrega o valor de syscall 1, para imprimir um inteiro
+	mv a0, t2                       # Move o valor do mmc para a0, que armazena o parametro de impressao
+	ecall                           # Realiza a chamada de sistema
+	li a7, 4                        # Carrega o valor de syscall 4, para impressao de string
+	la a0, str                      # Carrega o endereco onde a string esta armazenado
+	ecall                           # Realiza a chamada de sistema
+
+done:
